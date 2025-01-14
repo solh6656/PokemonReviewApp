@@ -72,7 +72,7 @@ namespace PokemonReviewApp.Controllers
                 .Where(c => c.Name.Trim().ToUpper() == categoryCreate.Name.TrimEnd().ToUpper())
                 .FirstOrDefault();
 
-            if(category == null)
+            if(category != null)
             {
                 ModelState.AddModelError("", "Category alredy exists");
                 return StatusCode(422, ModelState);
