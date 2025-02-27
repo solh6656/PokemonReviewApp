@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Copy everything and build
 COPY . ./
-WORKDIR /app/src/YourApp
+WORKDIR /app/src/PokemonReviewApp
 RUN dotnet restore
 RUN dotnet publish -c Release -o /out
 
@@ -15,4 +15,4 @@ WORKDIR /app
 COPY --from=build /out ./
 
 # Set the entry point for the application
-ENTRYPOINT ["dotnet", "YourApp.dll"]
+ENTRYPOINT ["dotnet", "PokemonReviewApp.dll"]
