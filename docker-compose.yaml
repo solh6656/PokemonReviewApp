@@ -4,8 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: PokemonReviewApp
+    restart: always
     ports:
-      - "5000:8080"
+      - 5000:8080
     depends_on:
       - db
     environment:
@@ -13,8 +14,6 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db;Database=PokemonReview;User ID=sa;Password=YourStrongPassword123;
     networks:
       - app-network
-    volumes:
-      - ./src:/app/src
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
