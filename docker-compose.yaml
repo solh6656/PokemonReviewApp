@@ -1,4 +1,5 @@
 services:
+  # Application service
   app:
     build:
       context: .
@@ -8,15 +9,17 @@ services:
     ports:
       - 5000:80
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=db;Database=PokemonReview;User ID=sa;Password=YourStrongPassword123;
     networks:
       - app-network
 
+  # SQL Server database service
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/azure-sql-edge:latest # Use azure-sql-edge for ARM support
     container_name: mssql_container
     environment:
       - ACCEPT_EULA=Y
@@ -28,6 +31,11 @@ services:
       - mssql_data:/var/opt/mssql
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrongPassword123 -Q 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   app-network:
