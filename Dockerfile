@@ -11,6 +11,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS serve
 WORKDIR /app
 COPY --from=build /src/PokemonReviewApp .
 
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT [ "dotnet", "PokemonReviewApp.dll" ]
